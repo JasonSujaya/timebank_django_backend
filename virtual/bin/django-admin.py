@@ -1,4 +1,4 @@
-#!/Users/jasonsujaya/Downloads/Timeo/Backend/virtual/bin/python3
+#!/Users/jasonsujaya/Desktop/timeo/BackendTest/virtual/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

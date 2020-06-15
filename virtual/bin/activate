@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/jasonsujaya/Downloads/Timeo/Backend/virtual"
+VIRTUAL_ENV="/Users/jasonsujaya/Desktop/timeo/BackendTest/virtual"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
