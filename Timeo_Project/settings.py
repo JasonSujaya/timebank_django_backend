@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'phone_field',
     'profiles_api',
     'post_api',
+    'timebanking_api',
     'post_interaction_api',
     'django_extensions',
 ]
