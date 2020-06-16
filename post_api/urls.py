@@ -18,7 +18,7 @@ router.register('post-images', PostTagRelationViewset,
 urlpatterns = [
     path('', include(router.urls)),
     path('post-manager/<int:pk>/images/', GetImageListAPIView.as_view()),
-    path('post-manager/<int:pk>/bookmarks/',
+    path('post-manager/<int:pk>/bookmarkslist/',
          post_interaction_views.GetPostBookmarkListAPIView.as_view()),
     path('post-manager/<int:pk>/comments/',
          post_interaction_views.GetPostCommentListAPIView.as_view()),
