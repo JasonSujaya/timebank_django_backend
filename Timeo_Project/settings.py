@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i&h#p4h(g0gf^q-nr6kiy$uny_)=c!iao!u$3c-$%toi0u9m+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://timeo-timebank.herokuapp.com/', '127.0.0.1']
 
 
 # Application definition
