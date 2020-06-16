@@ -13,8 +13,18 @@ from profiles_api import permissions
 
 
 # Import Apps & Serializers
-from .serializers import UserProfileSerializer, AddressSerializer
+from .serializers import UserProfileSerializer, AddressSerializer, UserAccountSerializer
 from .models import UserProfile, Address
+
+
+class UserAccountViewset(viewsets.ModelViewSet):
+    """Handles Authentication"""
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+
+    """Handles creating and fetching profile"""
+    queryset = UserProfile.objects.all()
+    serializer_class = UserAccountSerializer
 
 
 class UserProfilesView(viewsets.ModelViewSet):
