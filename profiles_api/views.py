@@ -51,34 +51,3 @@ class AddressViewSet(viewsets.ModelViewSet):
     # WILL REMOVE THIS
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-
-
-class AddressCreate(generics.CreateAPIView):
-    # Create address when user don't have address
-    """Handles Authentication"""
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateAddress,)
-
-    serializer_class = AddressSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user_profile=self.request.user)
-
-
-class AddressRetrieveUpdate(generics.RetrieveUpdateAPIView):
-    # Retrieve and updates address
-    """Handles Authentication"""
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateAddress,)
-
-    serializer_class = AddressSerializer
-
-    def get_queryset(self):
-        queryset = Address.objects.all()
-        return queryset
-
-
-# class ProfileImage(viewsets.ModelViewSet):
-#     # WILL REMOVE THIS
-#     queryset = Address.objects.all()
-#     serializer_class = AddressSerializer

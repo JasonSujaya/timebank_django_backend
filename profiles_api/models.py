@@ -87,11 +87,12 @@ class Address(models.Model):
 class ProfileImage(models.Model):
     user_profile = models.OneToOneField(
         UserProfile, on_delete=models.CASCADE, primary_key=True)
-    image_path = models.ImageField(blank=False, null=False)
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    alt_text = models.CharField(max_length=255)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
+    image_path = models.ImageField(null=True)
+    title = models.CharField(max_length=255, null=True)
+    description = models.CharField(max_length=255, null=True)
+    alt_text = models.CharField(max_length=255, null=True)
+    created_date = models.DateTimeField(
+        default=datetime.datetime.now)
 
     def __str__(self):
         """Return string representation of address"""
