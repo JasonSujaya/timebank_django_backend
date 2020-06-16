@@ -13,8 +13,8 @@ from profiles_api import permissions
 
 
 # Import Apps & Serializers
-from .serializers import PostCommentSerializer, ReportCategorySerializer, PostReportSerializer, PostCommentReportSerializer
-from .models import PostComment, ReportCategory, PostReport, PostCommentReport
+from .serializers import PostCommentSerializer, ReportCategorySerializer, PostReportSerializer, PostCommentReportSerializer, PostBookmarkSerializer
+from .models import PostComment, ReportCategory, PostReport, PostCommentReport, PostBookmark
 
 from Timeo_Project.pagination import FivePaginationLimitOffset
 
@@ -48,6 +48,29 @@ class PostCommentViewset(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
+
+
+class PostBookmarkViewset(viewsets.ModelViewSet):
+    queryset = PostBookmark.objects.all()
+    serializer_class = PostBookmarkSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)
+
+    def perform_destroy(self, instance):
+        instance.post_id.bookmarks -= 1
+        instance.post_id.save()
+        instance.delete()
+
+
+class GetPostBookmarkListAPIView(generics.ListAPIView):
+    queryset = PostBookmark.objects.all()
+    pagination_class = FivePaginationLimitOffset
+
+    def get_queryset(self):
+        queryset = PostBookmark.objects.filter(post_id=self.kwargs["pk"])
+        return queryset
+    serializer_class = PostBookmarkSerializer
 
 
 class GetPostCommentListAPIView(generics.ListAPIView):

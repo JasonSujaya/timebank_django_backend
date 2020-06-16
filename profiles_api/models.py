@@ -8,8 +8,6 @@ from django.conf import settings
 from django.utils import timezone
 from phone_field import PhoneField
 from django.conf import settings
-
-
 # Create user model
 
 

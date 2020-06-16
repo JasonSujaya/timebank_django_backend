@@ -91,13 +91,13 @@ class GetPostSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField('paginated_images')
     post_comments = post_interaction_serializers.PostCommentSerializer(
         many=True)
-    post_bookmarks = post_interaction_serializers.PostBookmarkSerializer(
+    post_bookmarkslist = post_interaction_serializers.PostBookmarkSerializer(
         many=True)
 
     class Meta:
         model = Post
         fields = ["id", "title", "user_profile",
-                  "category", "tag", "images", "post_comments", "post_bookmarks"]
+                  "category", "tag", "images", "post_comments", "post_bookmarkslist", "bookmarks"]
         extra_kwargs = {'user_profile': {'read_only': True}}
 
     def paginated_images(self, obj):

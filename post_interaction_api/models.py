@@ -23,13 +23,16 @@ class PostComment(models.Model):
 
 class PostBookmark(models.Model):
     user_id = models.ForeignKey(
-        profiles_models.UserProfile, related_name="postuser_bookmarks", on_delete=models.CASCADE)
+        profiles_models.UserProfile, related_name="user_bookmarkslist", on_delete=models.CASCADE)
     post_id = models.ForeignKey(
-        post_api_models.Post, related_name="post_bookmarks", on_delete=models.CASCADE)
+        post_api_models.Post, related_name="post_bookmarkslist", on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return self.post_id.title
+
+    # class Meta:
+        # unique_together = [['post_id', 'user_id']]
 
 
 class ReportCategory(models.Model):
