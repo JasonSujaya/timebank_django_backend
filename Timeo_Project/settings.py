@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i&h#p4h(g0gf^q-nr6kiy$uny_)=c!iao!u$3c-$%toi0u9m+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://timeo-timebank.herokuapp.com/', '127.0.0.1']
 
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,23 +83,23 @@ WSGI_APPLICATION = 'Timeo_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ddmoknujqg2dv6',
-        'USER': 'rinxlgoltzzsxa',
-        'PASSWORD': '30a2d0aabc573e01f04a1129c01e5d2e167a866f7aaa787edeefd0c2bd6f5684',
-        'HOST': 'ec2-52-202-22-140.compute-1.amazonaws.com',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ddmoknujqg2dv6',
+#         'USER': 'rinxlgoltzzsxa',
+#         'PASSWORD': '30a2d0aabc573e01f04a1129c01e5d2e167a866f7aaa787edeefd0c2bd6f5684',
+#         'HOST': 'ec2-52-202-22-140.compute-1.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
 
 
 # Password validation
