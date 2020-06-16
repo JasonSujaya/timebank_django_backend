@@ -36,6 +36,11 @@ class UserProfilesView(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
+    def create(self, request):
+        response = {
+            'message': 'Create function is not offered in this path.'}
+        return Response(response, status=status.HTTP_403_FORBIDDEN)
+
 
 class UserLoginApiView(ObtainAuthToken):
     """Handle creating user authentication tokens"""

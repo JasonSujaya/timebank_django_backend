@@ -50,7 +50,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     notification_newsletter = models.BooleanField(default=True)
     notifictioon_post = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
     date_joined = models.DateTimeField(default=datetime.datetime.now)
 
     objects = MyUserManager()
@@ -76,9 +75,9 @@ class Address(models.Model):
     user_profile = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     street = models.CharField(max_length=255, null=True)
-    country = models.CharField(max_length=255)
-    city = models.CharField(max_length=255, )
-    post_code = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    post_code = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         """Return string representation of address"""
