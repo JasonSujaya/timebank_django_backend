@@ -87,12 +87,10 @@ class PostSerializer(serializers.ModelSerializer):
 
 class GetPostSerializer(serializers.ModelSerializer):
     tag = PostTagSerializer(many=True)
-    # images = PostImagesSerializer(many=True, read_only=True)
     images = serializers.SerializerMethodField('paginated_images')
-    post_comments = post_interaction_serializers.PostCommentSerializer(
-        many=True)
-    post_bookmarkslist = post_interaction_serializers.PostBookmarkSerializer(
-        many=True)
+    post_comments = serializers.SerializerMethodField('paginated_comments')
+    post_bookmarkslist = serializers.SerializerMethodField(
+        'paginated_bookmarklist')
 
     class Meta:
         model = Post
@@ -101,10 +99,28 @@ class GetPostSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
     def paginated_images(self, obj):
-        paginator = Paginator(obj.images.all(), 5)
+        paginator = Paginator(obj.images.all(), 3)
         page_number = self.context['request'].query_params.get('page') or 1
         images = paginator.page(page_number)
         serializer = PostImagesSerializer(images, many=True, read_only=True)
+
+        return serializer.data
+
+    def paginated_comments(self, obj):
+        paginator = Paginator(obj.post_comments.all(), 3)
+        page_number = self.context['request'].query_params.get('page') or 1
+        post_comments = paginator.page(page_number)
+        serializer = post_interaction_serializers.PostCommentSerializer(
+            post_comments, many=True, read_only=True)
+
+        return serializer.data
+
+    def paginated_bookmarklist(self, obj):
+        paginator = Paginator(obj.post_bookmarkslist.all(), 3)
+        page_number = self.context['request'].query_params.get('page') or 1
+        post_bookmarkslist = paginator.page(page_number)
+        serializer = post_interaction_serializers.PostBookmarkSerializer(
+            post_bookmarkslist, many=True, read_only=True)
 
         return serializer.data
 
