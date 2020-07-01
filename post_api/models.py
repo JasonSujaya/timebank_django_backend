@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from profiles_api import models as profiles_models
 from django.core.paginator import Paginator
+from django.utils import timezone
+
 
 import datetime
 
@@ -32,8 +34,13 @@ class Post(models.Model):
     category = models.ForeignKey(
         PostCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    content = models.CharField(max_length=255)
     bookmarks = models.IntegerField(default=0)
     tag = models.ManyToManyField(PostTag, through='PostTagRelation')
+    visible = models.BooleanField(default=False)
+    pending = models.BooleanField(default=False)
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     def __str__(self):
         return self.title
