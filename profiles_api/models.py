@@ -41,17 +41,19 @@ class MyUserManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Database Models In The System"""
+    gender = models.CharField(max_length=255)
+
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    gender = models.CharField(max_length=255)
     date_of_birth = models.DateField(default=datetime.date.today)
     phone = PhoneField(blank=True, help_text='Contact phone number')
+    current_balance = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     notification_newsletter = models.BooleanField(default=True)
     notifictioon_post = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=datetime.datetime.now)
+    created_date = models.DateTimeField(default=datetime.datetime.now)
 
     objects = MyUserManager()
 
