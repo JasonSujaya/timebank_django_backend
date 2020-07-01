@@ -72,7 +72,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     notification_newsletter = models.BooleanField(default=True)
     notifictioon_post = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     objects = MyUserManager()
 
@@ -98,7 +99,7 @@ class UserConsent(models.Model):
         UserProfile, on_delete=models.CASCADE)
     consent_form = models.CharField(max_length=255)
     created_date = models.DateTimeField(
-        default=datetime.datetime.now)
+        default=timezone.now)
 
     def __str__(self):
         """Return string representation"""
@@ -113,7 +114,7 @@ class ProfileImage(models.Model):
     description = models.CharField(max_length=255, null=True)
     alt_text = models.CharField(max_length=255, null=True)
     created_date = models.DateTimeField(
-        default=datetime.datetime.now)
+        default=timezone.now)
 
     def __str__(self):
         """Return string representation"""
