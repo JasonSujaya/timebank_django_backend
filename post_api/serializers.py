@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, PostTag, PostTagRelation, PostImages
+from .models import Post, Tag, PostTagRelation, PostImages
 from post_interaction_api import models as post_interaction_models
 from post_interaction_api import serializers as post_interaction_serializers
 from django.core.paginator import Paginator
@@ -11,9 +11,9 @@ class PostImagesSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "description", "alt_text")
 
 
-class PostTagSerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PostTag
+        model = Tag
         fields = "__all__"
 
 
@@ -25,9 +25,9 @@ class PostTagRelationSerializer(serializers.ModelSerializer):
 
 class PostTagRelationObjectSerializer(serializers.ModelSerializer):
     # Serializers for Intermediary table between tag and posttag
-    tag = PostTagSerializer(read_only=True)
+    tag = TagSerializer(read_only=True)
     tag_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, source='tag', queryset=PostTag.objects.all())
+        write_only=True, source='tag', queryset=Tag.objects.all())
 
     class Meta:
         model = PostTagRelation
@@ -86,7 +86,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class GetPostSerializer(serializers.ModelSerializer):
-    tag = PostTagSerializer(many=True)
+    tag = TagSerializer(many=True)
     images = serializers.SerializerMethodField('paginated_images')
     post_comments = serializers.SerializerMethodField('paginated_comments')
     post_bookmarkslist = serializers.SerializerMethodField(
@@ -125,7 +125,7 @@ class GetPostSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-# class PostTagSerializer(serializers.HyperlinkedModelSerializer):
+# class TagSerializer(serializers.HyperlinkedModelSerializer):
 #     # tagurl = serializers.HyperlinkedIdentityField(view_name="tag-detail")
 #     id = serializers.ReadOnlyField()
 

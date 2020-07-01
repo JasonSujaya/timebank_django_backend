@@ -16,7 +16,7 @@ class PostCategory(models.Model):
         return self.category_name
 
 
-class PostTag(models.Model):
+class Tag(models.Model):
     tag_name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -34,7 +34,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.CharField(max_length=255)
     bookmarks = models.IntegerField(default=0)
-    tag = models.ManyToManyField(PostTag, through='PostTagRelation')
+    tag = models.ManyToManyField(Tag, through='PostTagRelation')
     visible = models.BooleanField(default=False)
     pending = models.BooleanField(default=False)
     created_date = models.DateTimeField(
@@ -51,7 +51,7 @@ class Post(models.Model):
 
 class PostTagRelation(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    tag_id = models.ForeignKey(PostTag, on_delete=models.CASCADE)
+    tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = [['post_id', 'tag_id']]
