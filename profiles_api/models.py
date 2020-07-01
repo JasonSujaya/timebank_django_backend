@@ -95,7 +95,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 class UserConsent(models.Model):
-    user_profile = models.ForeignKey(
+    user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE)
     consent_form = models.CharField(max_length=255)
     created_date = models.DateTimeField(
@@ -103,16 +103,14 @@ class UserConsent(models.Model):
 
     def __str__(self):
         """Return string representation"""
-        return self.user_profile.first_name
+        return self.user.first_name
 
 
 class ProfileImage(models.Model):
-    user_profile = models.OneToOneField(
+    user = models.OneToOneField(
         UserProfile, on_delete=models.CASCADE, primary_key=True)
     image_path = models.ImageField(null=True)
     title = models.CharField(max_length=255, null=True)
-    description = models.CharField(max_length=255, null=True)
-    alt_text = models.CharField(max_length=255, null=True)
     created_date = models.DateTimeField(
         default=timezone.now)
 
@@ -122,7 +120,7 @@ class ProfileImage(models.Model):
 
 
 class Address(models.Model):
-    user_profile = models.OneToOneField(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     street = models.CharField(max_length=255, null=True)
     country = models.CharField(max_length=255, null=True)
