@@ -119,11 +119,20 @@ class ProfileImage(models.Model):
         return self.street
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        """Return string representation"""
+        return self.name
+
+
 class Address(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    country = models.ForeignKey(
+        Country, on_delete=models.SET_NULL, null=True)
     street = models.CharField(max_length=255, null=True)
-    country = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     post_code = models.CharField(max_length=255, null=True)
 
