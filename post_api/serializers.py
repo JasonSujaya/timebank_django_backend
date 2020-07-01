@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Tag, PostTagRelation, PostImages
+from .models import Post, Tag, PostTag, PostImages
 from post_interaction_api import models as post_interaction_models
 from post_interaction_api import serializers as post_interaction_serializers
 from django.core.paginator import Paginator
@@ -17,26 +17,26 @@ class TagSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PostTagRelationSerializer(serializers.ModelSerializer):
+class PostTagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PostTagRelation
+        model = PostTag
         fields = "__all__"
 
 
-class PostTagRelationObjectSerializer(serializers.ModelSerializer):
+class PostTagObjectSerializer(serializers.ModelSerializer):
     # Serializers for Intermediary table between tag and posttag
     tag = TagSerializer(read_only=True)
     tag_id = serializers.PrimaryKeyRelatedField(
         write_only=True, source='tag', queryset=Tag.objects.all())
 
     class Meta:
-        model = PostTagRelation
+        model = PostTag
         fields = ("tag", "tag_id")
 
 
 class PostSerializer(serializers.ModelSerializer):
     # user = UserProfileSerializer(required=False)
-    tag = PostTagRelationObjectSerializer(many=True)
+    tag = PostTagObjectSerializer(many=True)
     images = PostImagesSerializer(many=True)
 
     class Meta:
@@ -52,7 +52,7 @@ class PostSerializer(serializers.ModelSerializer):
 
         # Create Tags for Post
         for tag_item in tag_data:
-            PostTagRelation.objects.create(
+            PostTag.objects.create(
                 post_id=post,
                 tag_id=tag_item.get("tag"))
         # Create Images For Post
@@ -70,9 +70,9 @@ class PostSerializer(serializers.ModelSerializer):
 
         # Updates Tags for Post
         tag_data = validated_data.pop('tag')
-        PostTagRelation.objects.filter(post_id=instance).delete()
+        PostTag.objects.filter(post_id=instance).delete()
         for tag_item in tag_data:
-            PostTagRelation.objects.create(
+            PostTag.objects.create(
                 post_id=instance,
                 tag_id=tag_item.get("tag"))
 

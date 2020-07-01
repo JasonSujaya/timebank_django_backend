@@ -34,11 +34,12 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.CharField(max_length=255)
     bookmarks = models.IntegerField(default=0)
-    tag = models.ManyToManyField(Tag, through='PostTagRelation')
     visible = models.BooleanField(default=False)
     pending = models.BooleanField(default=False)
     created_date = models.DateTimeField(
         default=timezone.now)
+
+    tag = models.ManyToManyField(Tag, through='PostTag')
 
     def __str__(self):
         return self.title
@@ -49,7 +50,7 @@ class Post(models.Model):
         ]
 
 
-class PostTagRelation(models.Model):
+class PostTag(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
 

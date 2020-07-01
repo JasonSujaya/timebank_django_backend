@@ -1,17 +1,17 @@
 from django.urls import path, include
 from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
-from .views import PostTagViewset, PostManagerView, PostTagRelationViewset, PostImages, GetImageListAPIView
+from .views import PostTagViewset, PostManagerView, TagViewset, PostImages, GetImageListAPIView
 from post_interaction_api import views as post_interaction_views
 
 router = DefaultRouter()
-router.register('tag', PostTagViewset,
+router.register('tag', TagViewset,
                 base_name='tag')
 router.register('post-manager', PostManagerView,
                 base_name='post-manager')
-router.register('post-tag', PostTagRelationViewset,
+router.register('post-tag', TagViewset,
                 base_name='post-tag')
-router.register('post-images', PostTagRelationViewset,
+router.register('post-images', TagViewset,
                 base_name='post-images')
 
 

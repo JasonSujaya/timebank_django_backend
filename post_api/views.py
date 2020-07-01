@@ -12,8 +12,8 @@ from rest_framework.authentication import TokenAuthentication
 from post_api import permissions
 
 # Import Apps & Serializers
-from .serializers import PostSerializer, GetPostSerializer, TagSerializer, PostTagRelationSerializer, PostImagesSerializer
-from .models import Post, Tag, PostTagRelation, PostImages
+from .serializers import PostSerializer, GetPostSerializer, TagSerializer, PostTagSerializer, PostImagesSerializer
+from .models import Post, Tag, PostTag, PostImages
 
 from Timeo_Project.pagination import FivePaginationLimitOffset
 
@@ -39,14 +39,14 @@ class PostManagerView(viewsets.ModelViewSet):
         return PostSerializer
 
 
-class PostTagViewset(viewsets.ModelViewSet):
+class TagViewset(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 
-class PostTagRelationViewset(viewsets.ModelViewSet):
-    queryset = PostTagRelation.objects.all()
-    serializer_class = PostTagRelationSerializer
+class PostTagViewset(viewsets.ModelViewSet):
+    queryset = PostTag.objects.all()
+    serializer_class = PostTagSerializer
 
 
 class GetImageListAPIView(generics.ListAPIView):
