@@ -90,13 +90,25 @@ WSGI_APPLICATION = 'Timeo_Project.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd98qjifunol3fo',
+#         'USER': 'autcfbwsnhoawv',
+#         'PASSWORD': 'f93b5a381443cb37361d8652cfc486addaa166d38fcafa1514e9cacca9d859f2',
+#         'HOST': 'ec2-54-247-78-30.eu-west-1.compute.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd98qjifunol3fo',
-        'USER': 'autcfbwsnhoawv',
-        'PASSWORD': 'f93b5a381443cb37361d8652cfc486addaa166d38fcafa1514e9cacca9d859f2',
-        'HOST': 'ec2-54-247-78-30.eu-west-1.compute.amazonaws.com',
+        'NAME': 'timeo',
+        'USER': 'jason',
+        'PASSWORD': 'jason',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }

@@ -28,7 +28,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
         PostCategory, on_delete=models.CASCADE)
-    bookmarks = models.IntegerField()
+    bookmarks = models.IntegerField(default=0)
     tag = models.ManyToManyField(PostTag, through='PostTagRelation')
     user_profile = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -37,6 +37,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['category']),
+        ]
 
 
 class PostTagRelation(models.Model):
