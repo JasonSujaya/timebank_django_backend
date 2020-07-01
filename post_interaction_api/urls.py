@@ -6,14 +6,14 @@ from .views import ReportCategoryViewset, PostCommentViewset, PostCommentReportV
 router = DefaultRouter()
 router.register('report-category', ReportCategoryViewset,
                 base_name='report-category')
-router.register('post-comment', PostCommentViewset,
-                base_name='post-comment')
-router.register('post-report_comment', PostCommentReportViewset,
-                base_name='post-report_comment')
-router.register('post-report', PostReportViewset,
-                base_name='post-report')
-router.register('post-bookmark', PostBookmarkViewset,
-                base_name='post-bookmar')
+router.register('comment', PostCommentViewset,
+                base_name='comment')
+router.register('report-comment', PostCommentReportViewset,
+                base_name='report_comment')
+router.register('report-post', PostReportViewset,
+                base_name='report-post')
+router.register('bookmark', PostBookmarkViewset,
+                base_name='bookmark')
 
 urlpatterns = [
     path('', include(router.urls)),

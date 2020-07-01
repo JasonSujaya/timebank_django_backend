@@ -3,6 +3,7 @@ from django.conf import settings
 from profiles_api import models as profiles_models
 from post_api import models as post_api_models
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 import datetime
 
@@ -15,7 +16,9 @@ class PostComment(models.Model):
     post_id = models.ForeignKey(
         post_api_models.Post, related_name="post_comments", on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
+    pending = models.BooleanField(default=False)
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     def __str__(self):
         return self.message
@@ -26,7 +29,8 @@ class PostBookmark(models.Model):
         profiles_models.UserProfile, related_name="user_bookmarkslist", on_delete=models.CASCADE)
     post_id = models.ForeignKey(
         post_api_models.Post, related_name="post_bookmarkslist", on_delete=models.CASCADE)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     def __str__(self):
         return self.post_id.title
