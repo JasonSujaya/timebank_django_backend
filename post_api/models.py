@@ -9,8 +9,6 @@ import datetime
 
 
 # Create your models here.
-
-
 class PostCategory(models.Model):
     category_name = models.CharField(max_length=255)
 
@@ -65,10 +63,10 @@ class PostTagRelation(models.Model):
 class PostImages(models.Model):
     post_id = models.ForeignKey(
         Post, related_name="images", on_delete=models.CASCADE)
+    image_path = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    alt_text = models.CharField(max_length=255)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     def __str__(self):
         return self.title
