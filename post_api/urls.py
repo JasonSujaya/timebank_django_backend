@@ -9,10 +9,8 @@ router.register('tag', TagViewset,
                 base_name='tag')
 router.register('post-manager', PostManagerView,
                 base_name='post-manager')
-router.register('post-tag', TagViewset,
+router.register('post-tag', PostTagViewset,
                 base_name='post-tag')
-router.register('post-images', TagViewset,
-                base_name='post-images')
 
 
 urlpatterns = [
