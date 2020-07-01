@@ -39,9 +39,28 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+class UserStatus(models.Model):
+    status = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        """Return string representation of address"""
+        return self.status
+
+
+class Gender(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        """Return string representation of address"""
+        return self.name
+
+
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Database Models In The System"""
-    gender = models.CharField(max_length=255)
+    gender = models.ForeignKey(
+        Gender, on_delete=models.SET_NULL, null=True)
+    status = models.ForeignKey(
+        UserStatus, on_delete=models.SET_NULL, null=True)
 
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
@@ -74,17 +93,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Address(models.Model):
-    user_profile = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
-    street = models.CharField(max_length=255, null=True)
-    country = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=255, null=True)
-    post_code = models.CharField(max_length=255, null=True)
+class UserConsent(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE)
+    consent_form = models.CharField(max_length=255)
+    created_date = models.DateTimeField(
+        default=datetime.datetime.now)
 
     def __str__(self):
-        """Return string representation of address"""
-        return self.street
+        """Return string representation"""
+        return self.user_profile.first_name
 
 
 class ProfileImage(models.Model):
@@ -98,5 +116,18 @@ class ProfileImage(models.Model):
         default=datetime.datetime.now)
 
     def __str__(self):
-        """Return string representation of address"""
+        """Return string representation"""
+        return self.street
+
+
+class Address(models.Model):
+    user_profile = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    street = models.CharField(max_length=255, null=True)
+    country = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    post_code = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        """Return string representation"""
         return self.street
