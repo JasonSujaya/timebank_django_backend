@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('profiles_api.urls')),
     path('api/post/', include('post_api.urls')),
-    path('api/post-interaction/', include('post_interaction_api.urls'))
+    path('api/post-interaction/', include('post_interaction_api.urls')),
+    path('api/timebanking/', include('timebanking_api.urls')),
 ]
