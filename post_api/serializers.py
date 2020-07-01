@@ -41,9 +41,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["id", "user_profile", "title",
+        fields = ["id", "user", "title",
                   "category", "tag", "images"]
-        extra_kwargs = {'user_profile': {'read_only': True}}
+        extra_kwargs = {'user': {'read_only': True}}
 
     def create(self, validated_data):
         tag_data = validated_data.pop('tag')
@@ -94,9 +94,9 @@ class GetPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["id", "title", "user_profile",
+        fields = ["id", "title", "user",
                   "category", "tag", "images", "post_comments", "post_bookmarkslist", "bookmarks"]
-        extra_kwargs = {'user_profile': {'read_only': True}}
+        extra_kwargs = {'user': {'read_only': True}}
 
     def paginated_images(self, obj):
         paginator = Paginator(obj.images.all(), 3)

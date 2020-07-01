@@ -25,15 +25,15 @@ class PostTag(models.Model):
 
 class Post(models.Model):
     """Post to be used for a recipe"""
-    title = models.CharField(max_length=255)
-    category = models.ForeignKey(
-        PostCategory, on_delete=models.CASCADE)
-    bookmarks = models.IntegerField(default=0)
-    tag = models.ManyToManyField(PostTag, through='PostTagRelation')
-    user_profile = models.ForeignKey(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+    category = models.ForeignKey(
+        PostCategory, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    bookmarks = models.IntegerField(default=0)
+    tag = models.ManyToManyField(PostTag, through='PostTagRelation')
 
     def __str__(self):
         return self.title

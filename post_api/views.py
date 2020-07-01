@@ -30,7 +30,7 @@ class PostManagerView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Save the currently loggedin user
-        serializer.save(user_profile=self.request.user)
+        serializer.save(user=self.request.user)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
