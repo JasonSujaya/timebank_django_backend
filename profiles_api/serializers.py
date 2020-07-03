@@ -22,7 +22,7 @@ class UserAccountSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         Address.objects.create(user=user)
-        # timebanking_model.CurrentBalance.objects.create(user=user)
+        timebanking_model.CurrentBalance.objects.create(user=user)
 
         return user
 
