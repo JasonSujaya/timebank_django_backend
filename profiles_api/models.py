@@ -9,6 +9,10 @@ from django.utils import timezone
 from phone_field import PhoneField
 from django.conf import settings
 
+from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.indexes import BrinIndex
+from django.contrib.postgres.indexes import GinIndex
+
 # Create user model
 
 
@@ -66,6 +70,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    full_name = SearchVectorField(null=True)
+    header = models.CharField(max_length=255, null=True)
+    about_me = models.CharField(max_length=255, null=True)
+    full_information = SearchVectorField(null=True)
     date_of_birth = models.DateField(default=datetime.date.today)
     phone = PhoneField(blank=True, help_text='Contact phone number')
     is_active = models.BooleanField(default=True)
@@ -80,6 +88,13 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', "last_name"]
 
+    class Meta:
+        indexes = [
+            BrinIndex(fields=['created_date']),
+            GinIndex(fields=["full_name"]),
+            GinIndex(fields=["full_information"])
+        ]
+
     # def get_full_name(self):
     #     """Returns the first_name plus the last_name, with a space in between"""
     #     full_name = '%s %s' % (self.first_name, self.last_name)
@@ -92,6 +107,11 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return string representation of user"""
         return self.email
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['id'])
+        ]
 
 
 class UserConsent(models.Model):

@@ -3,6 +3,8 @@ from profiles_api import models as profiles_models
 from post_api import models as post_api_models
 from django.utils import timezone
 
+from django.contrib.postgres.indexes import BrinIndex
+
 # Create your models here.
 
 
@@ -35,3 +37,8 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.value)
+
+    class Meta:
+        indexes = [
+            BrinIndex(fields=['created_date']),
+        ]
