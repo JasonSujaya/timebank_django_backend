@@ -70,6 +70,11 @@ class PostSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get("title", instance.title)
         instance.category = validated_data.get(
             "category", instance.category)
+        instance.content = validated_data.get(
+            "content", instance.content)
+        instance.full_title_content = str(validated_data.get("title", instance.title) + " " + validated_data.get(
+            "content", instance.content))
+
         instance.save()
 
         # Updates Tags for Post
