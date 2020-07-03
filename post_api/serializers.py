@@ -24,7 +24,7 @@ class TagSerializer(serializers.ModelSerializer):
         tag_list = Tag.objects.filter(user=user, created_date__range=[
             time_limit, timezone.now(), ])
 
-        #prevent creation of more than 5 tags under 8 hour
+        # prevent creation of more than 5 tags under 8 hour
         if (tag_list.count() <= 5):
             lower_case_name = validated_data['tag_name'].lower()
             tag = Tag.objects.create(
@@ -64,24 +64,34 @@ class PostSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user': {'read_only': True}}
 
     def create(self, validated_data):
-        tag_data = validated_data.pop('tag')
-        image_data = validated_data.pop('images')
-        post = Post.objects.create(**validated_data)
-        post.save()
-        post = Post.objects.get(id=post.id)
-        post.full_title_content = post.title + " " + post.content
-        post.save()
+        user = self.context['request'].user
+        time_limit = timezone.now() - timezone.timedelta(hours=8)
+        post_list = Post.objects.filter(user=user, created_date__range=[
+            time_limit, timezone.now(), ])
 
-        # Create Tags for Post
-        for tag_item in tag_data:
-            PostTag.objects.create(
-                post_id=post,
-                tag_id=tag_item.get("tag"))
-        # Create Images For Post
-        for image_item in image_data:
-            PostImages.objects.create(post_id=post, **image_item)
+        # prevent creation of more than 5 post under 8 hour
+        if (post_list.count() <= 5):
+            tag_data = validated_data.pop('tag')
+            image_data = validated_data.pop('images')
+            post = Post.objects.create(**validated_data)
+            post.save()
+            post = Post.objects.get(id=post.id)
+            post.full_title_content = post.title + " " + post.content
+            post.save()
 
-        return post
+            # Create Tags for Post
+            for tag_item in tag_data:
+                PostTag.objects.create(
+                    post_id=post,
+                    tag_id=tag_item.get("tag"))
+            # Create Images For Post
+            for image_item in image_data:
+                PostImages.objects.create(post_id=post, **image_item)
+
+            return post
+        else:
+            print("Too much tags ERROR")
+            pass
 
     def update(self, instance, validated_data):
         # updates the post
