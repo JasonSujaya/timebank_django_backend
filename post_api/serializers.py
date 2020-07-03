@@ -3,6 +3,7 @@ from .models import Post, Tag, PostTag, PostImages
 from post_interaction_api import models as post_interaction_models
 from post_interaction_api import serializers as post_interaction_serializers
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 
 class PostImagesSerializer(serializers.ModelSerializer):
@@ -14,7 +15,24 @@ class PostImagesSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = "__all__"
+        fields = ["tag_name", "id", "user"]
+        extra_kwargs = {'user': {'read_only': True}}
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        time_limit = timezone.now() - timezone.timedelta(hours=8)
+        tag_list = Tag.objects.filter(user=user, created_date__range=[
+            time_limit, timezone.now(), ])
+
+        #prevent creation of more than 5 tags under 8 hour
+        if (tag_list.count() <= 5):
+            lower_case_name = validated_data['tag_name'].lower()
+            tag = Tag.objects.create(
+                tag_name=lower_case_name, user=user)
+            return tag
+        else:
+            print("Too much tags ERROR")
+            pass
 
 
 class PostTagSerializer(serializers.ModelSerializer):

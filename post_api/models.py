@@ -19,7 +19,13 @@ class PostCategory(models.Model):
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=255)
+    tag_name = models.CharField(max_length=255, unique=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL, null=True
+    )
+    created_date = models.DateTimeField(
+        default=timezone.now)
 
     def __str__(self):
         return self.tag_name
