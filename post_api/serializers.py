@@ -49,6 +49,10 @@ class PostSerializer(serializers.ModelSerializer):
         tag_data = validated_data.pop('tag')
         image_data = validated_data.pop('images')
         post = Post.objects.create(**validated_data)
+        post.save()
+        post = Post.objects.get(id=post.id)
+        post.full_title_content = post.title + " " + post.content
+        post.save()
 
         # Create Tags for Post
         for tag_item in tag_data:
