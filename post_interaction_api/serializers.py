@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import PostComment, PostCommentReport, PostReport, PostBookmark, ReportCategory
 from post_api import models as post_api_models
+from django.utils import timezone
 
 
 class ReportCategorySerializer(serializers.ModelSerializer):
@@ -26,8 +27,21 @@ class PostCommentReportSerializer(serializers.ModelSerializer):
 class PostCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostComment
-        fields = ("__all__")
+        fields = ("id", "message", "user_id", "post_id")
         extra_kwargs = {'user_id': {'read_only': True}}
+
+    # prevent creation of more than 5 comments per post under 5 minute
+    def create(self, validated_data):
+        user = self.context['request'].user
+        time_limit = timezone.now() - timezone.timedelta(minutes=5)
+        comment_list = PostComment.objects.filter(user_id=user, post_id=validated_data["post_id"].id, created_date__range=[
+            time_limit, timezone.now(), ])
+        if (comment_list.count() <= 5):
+            comments = PostComment.objects.create(**validated_data)
+            return comments
+        else:
+            print("Too much tags COMMENTS ON POST")
+            pass
 
 
 class PostBookmarkSerializer(serializers.ModelSerializer):
@@ -44,4 +58,3 @@ class PostBookmarkSerializer(serializers.ModelSerializer):
         # Create the bookmark value
         bookmark = PostBookmark.objects.create(**validated_data)
         return bookmark
-
