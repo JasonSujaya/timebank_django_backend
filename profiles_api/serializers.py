@@ -52,24 +52,33 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('id', 'email', 'first_name',
-                  'last_name', 'gender', 'address')
+                  'last_name', 'about_me', 'header', 'gender', 'address')
         extra_kwargs = {'email': {'read_only': True}}
+        # extra_kwargs = {'address': {'read_only': True}}
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get(
             "first_name", instance.first_name)
         instance.last_name = validated_data.get(
             "last_name", instance.first_name)
+        instance.full_name = str(validated_data.get(
+            "first_name", instance.first_name) + " " + validated_data.get(
+            "last_name", instance.first_name))
         instance.gender = validated_data.get("gender", instance.gender)
+        instance.about_me = validated_data.get("about_me", instance.about_me)
+        instance.header = validated_data.get("header", instance.header)
+        instance.full_information = str(validated_data.get(
+            "about_me", instance.about_me) + validated_data.get("header", instance.header))
+        instance.save()
 
         # Updates or create the address information
-        address_data = dict(validated_data.get('address'))
-        address = Address.objects.get(user_profile=instance.id)
-        address.street = address_data['street']
-        address.country = address_data['country']
-        address.city = address_data['city']
-        address.post_code = address_data['post_code']
-        address.save()
+        # address_data = dict(validated_data.get('address'))
+        # address = Address.objects.get(user=instance)
+        # address.street = address_data['street']
+        # address.country = address_data['country']
+        # address.city = address_data['city']
+        # address.post_code = address_data['post_code']
+        # address.save()
 
         return instance
 

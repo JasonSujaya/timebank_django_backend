@@ -158,4 +158,4 @@ class Address(models.Model):
 
     def __str__(self):
         """Return string representation"""
-        return self.street
+        return self.user.first_name
