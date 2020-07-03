@@ -35,7 +35,7 @@ class Post(models.Model):
         PostCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.CharField(max_length=255)
-    title_content_search = SearchVectorField(null=True)
+    full_title_content = SearchVectorField(null=True)
     bookmarks = models.IntegerField(default=0)
     visible = models.BooleanField(default=False)
     pending = models.BooleanField(default=False)
@@ -51,7 +51,7 @@ class Post(models.Model):
         indexes = [
             BrinIndex(fields=['created_date']),
             models.Index(fields=['id', 'category']),
-            GinIndex(fields=["title_content_search"])
+            GinIndex(fields=["full_title_content"])
         ]
 
 

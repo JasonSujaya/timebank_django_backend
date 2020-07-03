@@ -4,6 +4,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 import datetime
 
+
 from django.conf import settings
 from django.utils import timezone
 from phone_field import PhoneField
@@ -42,7 +43,6 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
 
         address = Address.objects.create(user=user)
-        timebanking_model.CurrentBalance.objects.create(user=user)
         return user
 
 
