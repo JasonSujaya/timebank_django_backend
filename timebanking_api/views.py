@@ -15,6 +15,10 @@ class TransactionView(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
+    def perform_create(self, serializer):
+        # Save the currently loggedin user
+        serializer.save(sender=self.request.user)
+
 
 class CurrentBalanceView(viewsets.ModelViewSet):
     """Handles creating and fetching profile"""

@@ -3,15 +3,16 @@ from profiles_api import models as profiles_models
 from post_api import models as post_api_models
 from django.utils import timezone
 
-
 # Create your models here.
+
+
 class CurrentBalance(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         profiles_models.UserProfile, related_name="user_balance", on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.post_id.title
+        return str(self.amount)
 
 
 class TransactionStatus(models.Model):

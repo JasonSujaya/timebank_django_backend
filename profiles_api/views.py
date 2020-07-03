@@ -16,6 +16,8 @@ from profiles_api import permissions
 from .serializers import UserProfileSerializer, AddressSerializer, UserAccountSerializer
 from .models import UserProfile, Address
 
+from Timeo_Project.pagination import FivePaginationLimitOffset
+
 
 class UserAccountViewset(viewsets.ModelViewSet):
     """Handles Authentication"""
@@ -26,6 +28,8 @@ class UserAccountViewset(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserAccountSerializer
 
+    pagination_class = FivePaginationLimitOffset
+
 
 class UserProfilesView(viewsets.ModelViewSet):
     """Handles Authentication"""
@@ -35,6 +39,8 @@ class UserProfilesView(viewsets.ModelViewSet):
     """Handles creating and fetching profile"""
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+    pagination_class = FivePaginationLimitOffset
 
     def create(self, request):
         response = {

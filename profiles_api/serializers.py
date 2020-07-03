@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import UserProfile, Address, ProfileImage
+from timebanking_api import models as timebanking_model
 import json
 
 
@@ -20,7 +21,8 @@ class UserAccountSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password']
         )
-        Address.objects.create(user_profile=user)
+        Address.objects.create(user=user)
+        timebanking_model.CurrentBalance.objects.create(user=user)
 
         return user
 

@@ -8,6 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 from phone_field import PhoneField
 from django.conf import settings
+
 # Create user model
 
 
@@ -67,7 +68,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     date_of_birth = models.DateField(default=datetime.date.today)
     phone = PhoneField(blank=True, help_text='Contact phone number')
-    current_balance = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     notification_newsletter = models.BooleanField(default=True)
     notifictioon_post = models.BooleanField(default=True)
@@ -80,14 +80,14 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', "last_name"]
 
-    def get_full_name(self):
-        """Returns the first_name plus the last_name, with a space in between"""
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name
+    # def get_full_name(self):
+    #     """Returns the first_name plus the last_name, with a space in between"""
+    #     full_name = '%s %s' % (self.first_name, self.last_name)
+    #     return full_name
 
-    def get_short_name(self):
-        """Returns the first name """
-        return self.first_name
+    # def get_short_name(self):
+    #     """Returns the first name """
+    #     return self.first_name
 
     def __str__(self):
         """Return string representation of user"""
@@ -116,7 +116,7 @@ class ProfileImage(models.Model):
 
     def __str__(self):
         """Return string representation"""
-        return self.street
+        return self.title
 
 
 class Country(models.Model):
