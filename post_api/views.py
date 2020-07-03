@@ -47,6 +47,7 @@ class TagViewset(viewsets.ModelViewSet):
 class PostTagViewset(viewsets.ModelViewSet):
     queryset = PostTag.objects.all()
     serializer_class = PostTagSerializer
+    pagination_class = FivePaginationLimitOffset
 
 
 class GetImageListAPIView(generics.ListAPIView):

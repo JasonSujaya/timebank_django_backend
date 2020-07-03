@@ -29,6 +29,7 @@ class ReportCategoryViewset(viewsets.ModelViewSet):
 class PostReportViewset(viewsets.ModelViewSet):
     queryset = PostReport.objects.all()
     serializer_class = PostReportSerializer
+    pagination_class = FivePaginationLimitOffset
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
@@ -37,6 +38,7 @@ class PostReportViewset(viewsets.ModelViewSet):
 class PostCommentReportViewset(viewsets.ModelViewSet):
     queryset = PostCommentReport.objects.all()
     serializer_class = PostCommentReportSerializer
+    pagination_class = FivePaginationLimitOffset
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
@@ -45,6 +47,7 @@ class PostCommentReportViewset(viewsets.ModelViewSet):
 class PostCommentViewset(viewsets.ModelViewSet):
     queryset = PostComment.objects.all()
     serializer_class = PostCommentSerializer
+    pagination_class = FivePaginationLimitOffset
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
@@ -53,6 +56,7 @@ class PostCommentViewset(viewsets.ModelViewSet):
 class PostBookmarkViewset(viewsets.ModelViewSet):
     queryset = PostBookmark.objects.all()
     serializer_class = PostBookmarkSerializer
+    pagination_class = FivePaginationLimitOffset
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
