@@ -41,6 +41,8 @@ class MyUserManager(BaseUserManager):
         user.is_staff = True
         user.save(using=self._db)
 
+        address = Address.objects.create(user=user)
+        timebanking_model.CurrentBalance.objects.create(user=user)
         return user
 
 

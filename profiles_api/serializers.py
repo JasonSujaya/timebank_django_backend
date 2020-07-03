@@ -42,7 +42,7 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = "__all__"
-        extra_kwargs = {'user_profile': {'read_only': True}}
+        extra_kwargs = {'user': {'read_only': True}}
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -72,13 +72,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.save()
 
         # Updates or create the address information
-        # address_data = dict(validated_data.get('address'))
-        # address = Address.objects.get(user=instance)
-        # address.street = address_data['street']
-        # address.country = address_data['country']
-        # address.city = address_data['city']
-        # address.post_code = address_data['post_code']
-        # address.save()
+        address_data = dict(validated_data.get('address'))
+        address = Address.objects.get(user=instance.id)
+        address.street = address_data['street']
+        address.city = address_data['city']
+        address.post_code = address_data['post_code']
+        address.save()
 
         return instance
 
