@@ -9,7 +9,7 @@ from django.utils import timezone
 class PostImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostImages
-        fields = ("id", "title", "description", "alt_text")
+        fields = ("id", "title", "image_path")
 
 
 class TagSerializer(serializers.ModelSerializer):

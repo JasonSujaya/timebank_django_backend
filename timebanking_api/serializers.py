@@ -20,13 +20,15 @@ class TransactionSerializer(serializers.ModelSerializer):
 
         # prevent creation of more than 5 post under 5 minutes
         if (transaction_list.count() <= 5):
-            sending_money = Transaction.objects.create(**validated_data)
+            # locks transactions and ensure that transaction is applied only when the right condition is present
             with transaction.atomic():
                 balance_sender = CurrentBalance.objects.select_for_update().get(
                     user=self.context['request'].user.id)
                 balance_receiver = CurrentBalance.objects.select_for_update().get(
                     user=validated_data["receiver"])
                 if(balance_sender.amount >= validated_data["value"]):
+                    sending_money = Transaction.objects.create(
+                        **validated_data)
                     balance_sender.amount -= validated_data["value"]
                     balance_receiver.amount += validated_data["value"]
                     balance_sender.save()
