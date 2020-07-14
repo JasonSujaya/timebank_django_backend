@@ -53,6 +53,14 @@ class UserLoginApiView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
+class UserLogoutApiView(APIView):
+    """Handle deleting user authentication tokens"""
+
+    def get(self, request, format=None):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
 class AddressViewSet(viewsets.ModelViewSet):
     # WILL REMOVE THIS
     queryset = Address.objects.all()
