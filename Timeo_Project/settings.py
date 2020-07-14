@@ -90,28 +90,28 @@ WSGI_APPLICATION = 'Timeo_Project.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'd98qjifunol3fo',
-#         'USER': 'autcfbwsnhoawv',
-#         'PASSWORD': 'f93b5a381443cb37361d8652cfc486addaa166d38fcafa1514e9cacca9d859f2',
-#         'HOST': 'ec2-54-247-78-30.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432'
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'timeo',
-        'USER': 'jason',
-        'PASSWORD': 'jason',
-        'HOST': 'localhost',
+        'NAME': 'd42m15dtihsu4k',
+        'USER': 'tyjdeidhhimgfn',
+        'PASSWORD': '0a3908c43fd89a5374f3d9617b710a8fc6b5a2542c1f3e817e73c4fcf967c315',
+        'HOST': 'ec2-176-34-123-50.eu-west-1.compute.amazonaws.com',
         'PORT': '5432'
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'timeo',
+#         'USER': 'jason',
+#         'PASSWORD': 'jason',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
 
 # Password validation
