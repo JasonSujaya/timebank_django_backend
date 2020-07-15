@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics, mixins, filters
+from django.db.models import Q
 
 # Auth Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -24,8 +25,8 @@ class PostManagerView(viewsets.ModelViewSet):
     permission_classes = (permissions.InteractOwnPost,)
 
     queryset = Post.objects.all()
-    filter_backends = [filters.SearchFilter]
-    search_fields = ["title"]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["full_title_content"]
     pagination_class = FivePaginationLimitOffset
 
     def perform_create(self, serializer):
