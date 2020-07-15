@@ -30,10 +30,6 @@ class UserAccountViewset(viewsets.ModelViewSet):
 
     pagination_class = FivePaginationLimitOffset
 
-    """Handles filtering"""
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ["about_me", "header"]
-
 
 class UserProfilesView(viewsets.ModelViewSet):
     """Handles Authentication"""
@@ -50,6 +46,10 @@ class UserProfilesView(viewsets.ModelViewSet):
         response = {
             'message': 'Create function is not offered in this path.'}
         return Response(response, status=status.HTTP_403_FORBIDDEN)
+
+    """Handles filtering"""
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["full_information", "full_name"]
 
 
 class UserLoginApiView(ObtainAuthToken):
