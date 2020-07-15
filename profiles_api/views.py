@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, viewsets, generics, mixins
+from rest_framework import status, viewsets, generics, mixins, filters
 
 # Auth Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -29,6 +29,10 @@ class UserAccountViewset(viewsets.ModelViewSet):
     serializer_class = UserAccountSerializer
 
     pagination_class = FivePaginationLimitOffset
+
+    """Handles filtering"""
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["about_me", "header"]
 
 
 class UserProfilesView(viewsets.ModelViewSet):
